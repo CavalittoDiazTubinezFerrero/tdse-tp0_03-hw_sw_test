@@ -1,0 +1,18 @@
+Descripción:
+Archivo principal. Inicializa el microcontrolador, los periféricos y el sistema de reloj, y llama a las funciones de aplicación
+
+
+Tipos de datos:
+	- UART_HandleTypeDef
+	- RCC_OscInitTypeDef
+	- RCC_ClkInitTypeDef
+	- GPIO_InitTypeDef
+	
+	
+Métodos/Funciones:
+	- main()
+	- SystemClock_Config()
+	- MX_USART2_UART_Init()
+	- MX_GPIO_Init()
+	- Error_Handler()
+	- assert_failed()

@@ -1,0 +1,67 @@
+Análisis y descripción del código fuente de task_c.c
+1. TIPOS DE DATOS
+Tipos de Datos Primitivos
+	- uint32_t: Entero sin signo de 32 bits para contadores y tiempos
+	- bool: Tipo booleano para flags de control
+	- void*: Punteros genéricos para parámetros de tareas
+	- const char*: Punteros a cadenas constantes para mensajes
+	- task_cfg_t: Estructura de configuración de tareas
+	- task_dta_t: Estructura de datos de rendimiento de tareas
+
+2. ESTRUCTURAS DE DATOS
+Estructura task_cfg_t (Configuración de Tareas)
+	- Utiliza punteros a función para implementar polimorfismo en C
+	- Permite configuración dinámica de comportamiento de tareas
+	- Encapsula la interfaz común de todas las tareas
+
+Estructura task_dta_t (Datos de Rendimiento)
+	- Estructura simple para métricas de rendimiento
+	- Extensible para agregar más estadísticas
+	- Separación clara entre configuración y datos de runtime
+
+3. ARRAYS DE ESTRUCTURAS DE DATOS
+Array de Configuración task_cfg_list[]
+	- Array constante en memoria flash/ROM
+	- Inicialización estática con punteros a función
+	- Configuración declarativa de las tareas del sistema
+
+Array de Datos task_dta_list[]
+	- Array dinámico en RAM para datos de runtime
+	- Tamaño calculado automáticamente con macro TASK_QTY
+	- Inicialización en runtime durante app_init()
+
+4. MÉTODOS Y FUNCIONES
+Métodos de Inicialización
+	- app_init(void): Inicializador principal del sistema
+	- cycle_counter_init(): Inicializa contador de ciclos DWT
+	- task_x_init(): Inicializadores específicos de cada tarea
+
+Métodos de Ejecución
+	- app_update(void): Bucle principal de ejecución
+	- task_x_update(): Actualizadores específicos de cada tarea
+	- HAL_SYSTICK_Callback(void): Handler de interrupción del timer
+
+Métodos de Medición
+	- cycle_counter_reset(): Reinicia contador de ciclos
+	- cycle_counter_get_time_us(): Obtiene tiempo transcurrido en μs
+
+5. PATRONES DE DISEÑO IMPLEMENTADOS
+5.1 Patrón Strategy (Estrategia)
+	Propósito: Permite intercambiar algoritmos (tareas) dinámicamente
+	Implementación: Punteros a función en estructura de configuración
+	Beneficio: Fácil extensión del sistema con nuevas tareas
+
+5.2 Patrón Template Method (Método Plantilla)
+	Propósito: Define esqueleto de algoritmo con pasos variables
+	Implementación: Bucle común con llamadas a métodos específicos
+	Beneficio: Código común reutilizable con comportamiento personalizable
+
+5.3 Patrón Observer (Observador)
+	Propósito: Notificación automática de eventos temporales
+	Implementación: Callback de interrupción que actualiza observadores
+	Beneficio: Desacoplamiento entre generador de eventos y procesadores
+
+5.4 Patrón Registry/Configuration
+	Propósito: Registro centralizado de componentes del sistema
+	Implementación: Array constante con configuraciones
+	Beneficio: Fácil mantenimiento y extensión del sistema

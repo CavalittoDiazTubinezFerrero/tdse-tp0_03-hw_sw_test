@@ -1,0 +1,9 @@
+Análisis de las variables g_app_runtime_us y task_dta_list[].WCET
+
+La variable g_app_runtime_us mide el tiempo en microsegundos que dura la ejecución de todas las tareas. 
+En app_update(), antes de comenzar la ejecución de las tareas vale cero y se incrementa en cycle_counter_time_us al finalizar la ejecución de la tarea x.
+Utilizar LOGGER_INFO permitió visualizar los valores que toma la variable g_app_runtime_us (entre 188 y 191).
+
+
+El campo WCET se setea en cero en app_init() y se actualiza en app_update() según la variable cycle_counter_time_us. Para una tarea dada (a, b o c), se calcula el tiempo de ejecución, y el campo WCET se actualiza si este tiempo de ejecución es peor que los anteriores.
+Utilizar LOGGER_INFO nos permitió identificar que el WCET para las tareas a, b y c fueron 188, 1 y 2, respectivamente.

@@ -1,0 +1,43 @@
+Evolución de las variable SysTick y SystemCoreClock, desde Reset hasta ejecutar app_init():
+
+Reset:
+ - SysTick (CTRL) = 0
+ - SysTick (LOAD) = 0
+ - SysTick (VAL) = 0
+ - SysTick (CALIB) = 1073750824
+ - SystemCoreClock = 8000000
+
+Después del HAL_Init()
+ - SysTick (CTRL) = 7
+ - SysTick (LOAD) = 7999
+ - SysTick (VAL) = 7706
+ - SysTick (CALIB) = 1073750824
+ - SystemCoreClock = 8000000
+
+Después del SystemClock_Config()
+ - SysTick (CTRL) = 7
+ - SysTick (LOAD) = 63999
+ - SysTick (VAL) = 63714
+ - SysTick (CALIB) = 1073750824
+ - SystemCoreClock = 64000000
+
+Después del MX_GPIO_Init()
+ - SysTick (CTRL) = 7
+ - SysTick (LOAD) = 63999
+ - SysTick (VAL) = 63714
+ - SysTick (CALIB) = 1073750824
+ - SystemCoreClock = 64000000
+
+Después del MX_USART2_UART_Init()
+ - SysTick (CTRL) = 7
+ - SysTick (LOAD) = 63999
+ - SysTick (VAL) = 60466
+ - SysTick (CALIB) = 1073750824
+ - SystemCoreClock = 64000000
+
+Después de app_update()
+ - SysTick (CTRL) = 65543
+ - SysTick (LOAD) = 63999
+ - SysTick (VAL) = 20648
+ - SysTick (CALIB) = 1073750824
+ - SystemCoreClock = 64000000

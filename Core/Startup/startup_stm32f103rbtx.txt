@@ -1,0 +1,18 @@
+Descripción:
+El archivo está escrito Assembly para la arquitectura ARM Cortex-M3 (en este caso, un microcontrolador STM32F103).
+Es el código de arranque y tiene las siguientes funciones:
+	- Setea el SP (Stack Pointer) al primer valor de la vector table
+	- Setea el PC (Program Counter) al segundo valor de la vector table (que es la dirección de Reset_Handler)
+	- Setea la vector table con las direcciones de las rutinas de interrupción y excepciones
+	- Configura el reloj del sistema
+	- Invocar al main()
+	
+
+Estructuras de datos:
+	- Vector table (g_pfnVectors): array de punteros
+
+
+Métodos/Handlers:
+	- Rest_Handler
+	- Default_Handler
+	- ISR Handlers (NMI_Handler, SysTick_Handler, USART1_IRQHandler, etc.)

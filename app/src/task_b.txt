@@ -1,0 +1,45 @@
+Análisis y descripción del código fuente de task_b.c
+1. TIPOS DE DATOS
+    - uint32_t: Entero sin signo de 32 bits (usado en contadores, variables de tiempo y control)
+    - char: Para caracteres (usado en el puntero a string)
+    - void: Para funciones que no retornan valor y punteros genéricos
+    - const char *: Puntero a cadena de caracteres constante
+
+2. ESTRUCTURAS DE DATOS
+    - cstatic uint32_t task_b_cnt = TASK_B_CNT_INI : Contador cíclico
+    - static uint32_t then = TASK_B_DEL_INI: Timestamp anterior
+    - static uint32_t now = TASK_B_DEL_INI: Timestamp actual
+    - cuint32_t g_task_b_cnt: Contador global de ejecuciones
+    - const char *p_task_b: Identificador de tarea
+
+3. ARRAYS Y COLECCIONES
+    - No hay arrays explícitos en este módulo, pero:
+
+4. MÉTODOS Y FUNCIONES
+    - void task_b_init(void *parameters): Inicialización de la tarea B
+    - void task_b_update(void *parameters): Actualización/ejecución de la tarea B
+    - LOGGER_INFO(): Para logging/registro de información
+    - HAL_GetTick(): Para obtener el tick actual del sistema (tiempo)
+    - GET_NAME(): Macro para obtener nombres de variables
+
+5. PATRONES DE DISEÑO DE SOFTWARE
+    5.1: Task Pattern (Patrón de Tareas):
+         Misma estructura que Task A: separación entre inicialización y ejecución
+         Diseño consistente para sistema de tareas múltiples
+
+    5.2: Strategy Pattern:
+         Compilación condicional (#if TEST_X == TEST_0/1/2) para diferentes comportamientos
+         TEST_0: Contador cíclico con reset
+         TEST_1: Control de tiempo no bloqueante
+
+    5.3: State Machine Pattern (implícito en TEST_1):
+         Variables estáticas then y now mantienen estado entre llamadas
+         Control de timing basado en diferencias temporales
+
+    5.4: Non-Blocking Pattern:
+        Implementa código no bloqueante
+        En TEST_1 usa HAL_GetTick() en lugar de HAL_Delay()
+        Permite que otras tareas se ejecuten sin bloqueo
+
+    5.5: Singleton Pattern (implícito):
+         Variable global g_task_b_cnt para instancia única
