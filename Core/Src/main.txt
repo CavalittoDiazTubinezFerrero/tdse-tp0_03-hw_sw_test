@@ -1,18 +1,19 @@
-Descripción:
-Archivo principal. Inicializa el microcontrolador, los periféricos y el sistema de reloj, y llama a las funciones de aplicación
+Análisis y descripción del código fuente main.c
+main.c es el archivo principal. Inicializa el microcontrolador, los periféricos y el sistema de reloj, y llama a las funciones de aplicación
 
-
-Tipos de datos:
-	- UART_HandleTypeDef
-	- RCC_OscInitTypeDef
-	- RCC_ClkInitTypeDef
-	- GPIO_InitTypeDef
+1. ESTRUCTURAS DE DATOS
+	- UART_HandleTypeDef: estructura de la HAL para manejar USART2
+	- RCC_OscInitTypeDef, RCC_ClkInitTypeDef, GPIO_InitTypeDef: estructuras HAL para configuración de relojes y GPIOs
 	
+2. MÉTODOS Y FUNCIONES
+	- main(): inicializa HAL (HAL_init()), configura reloj (SystemClock_Config()), 
+				inicializa periféricos (MX_GPIO_Init, MX_USART2_UART_Init),
+				llama app_init(), entra en un loop infinito donde llama a app_update()
+	- SystemClock_Config(): configura HSI + PLL a x16 para generar SYSCLK
+	- MX_USART2_UART_Init(): inicializa USART2
+	- MX_GPIO_Init(): configura pines
+	- Error_Handler(): desactiva interrupciones y entra en bucle infinito
+	- assert_failed(): placeholder para definir una rutina de manejo de error
 	
-Métodos/Funciones:
-	- main()
-	- SystemClock_Config()
-	- MX_USART2_UART_Init()
-	- MX_GPIO_Init()
-	- Error_Handler()
-	- assert_failed()
+3. PATRONES DE DISEÑO IMPLEMENTADOS
+	- Plantilla CubeMX: separación de inicialización de periféricos y lógica de aplicación.

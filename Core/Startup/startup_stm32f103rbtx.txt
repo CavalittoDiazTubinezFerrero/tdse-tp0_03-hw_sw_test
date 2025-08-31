@@ -1,4 +1,4 @@
-Descripción:
+Análisis y descripción del código fuente startup_stm32f103rbtx.s:
 El archivo está escrito Assembly para la arquitectura ARM Cortex-M3 (en este caso, un microcontrolador STM32F103).
 Es el código de arranque y tiene las siguientes funciones:
 	- Setea el SP (Stack Pointer) al primer valor de la vector table
@@ -7,12 +7,15 @@ Es el código de arranque y tiene las siguientes funciones:
 	- Configura el reloj del sistema
 	- Invocar al main()
 	
-
-Estructuras de datos:
+1. ESTRUCTURAS DE DATOS
 	- Vector table (g_pfnVectors): array de punteros
 
-
-Métodos/Handlers:
-	- Rest_Handler
-	- Default_Handler
+2. MÉTODOS Y FUNCIONES
+	- Reset_Handler: llama a SystemInit (configuracion del reloj), copia .data desde Flash a RAM, inicializa .bss en cero,
+					llama a __libc_init_array, salta a main
+	- Default_Handler: bucle infinito para interrupciones no definidas
 	- ISR Handlers (NMI_Handler, SysTick_Handler, USART1_IRQHandler, etc.)
+	
+3. PATRONES DE DISEÑO IMPLEMENTADOS
+	- Weak alias: cada ISR (NMI_Handler, HardFault_Handler, etc.) está definido como weak y apunta a Default_Handler. 
+					Esto permite que el usuario redefina solo los que necesita (patrón de sobrescritura por debilidad).
