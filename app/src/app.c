@@ -168,6 +168,8 @@ void app_update(void)
 			{
 				task_dta_list[index].WCET = cycle_counter_time_us;
 			}
+
+			LOGGER_INFO("Task %d -> Total runtime (us): %lu | Current WCET: %d",index,g_app_runtime_us, task_dta_list[index].WCET)
 		}
 
 		/* Protect shared resource */
